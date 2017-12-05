@@ -25,8 +25,6 @@ class BridgeCli < Formula
 
     Dir.chdir("Bridge/bin/Release") do
       libexec.install("bridge.exe")
-      #recursive_install("templates", libexec)
-      #recursive_install("tools", libexec)
       libexec.install("templates")
       libexec.install("tools")
 
@@ -53,22 +51,5 @@ exit ${!}"
     # `test do` will create, run in and delete a temporary directory.
 
     system bin/"bridge"
-  end
-
-  def recursive_install(source, destination)
-    print("Checkup metafiles from '"+source+"' to '"+destination+"'.\n")
-    print("Install metafiles from '"+source+"' to '"+destination+"'.\n")
-
-    # We install first and recurse later, else it will install to a subdirectory
-    # with the same name.
-    Pathname(destination.to_s).install(source)
-    Pathname(source).subdirs.each do |subpath|
-      # Just the immediate upper directory part of the path
-      #new_dest = destination.to_s + "/" + File.basename(File.dirname(subpath))
-      new_dest = destination.to_s
-      print("Recursing into '"+subpath+"': "+new_dest+"\n")
-      recursive_install(subpath, new_dest)
-    end
-
   end
 end

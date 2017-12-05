@@ -50,6 +50,7 @@ exit ${!}"
   test do
     # `test do` will create, run in and delete a temporary directory.
 
-    system bin/"bridge"
+    system bin/"bridge", "new"
+    system bin/"bridge", "build"
   end
 end

@@ -179,43 +179,6 @@ class Mono < Formula
     EOS
     system bin/"xbuild", "test.csproj"
 
-    if build.with? "fsharp"
-      # Test that fsharpi is working
-      ENV.prepend_path "PATH", bin
-      (testpath/"test.fsx").write <<~EOS
-        printfn "#{test_str}"; 0
-      EOS
-      output = pipe_output("#{bin}/fsharpi test.fsx")
-      assert_match test_str, output
-
-      # Tests that xbuild is able to execute fsc.exe
-      (testpath/"test.fsproj").write <<~EOS
-        <?xml version="1.0" encoding="utf-8"?>
-        <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-          <PropertyGroup>
-            <ProductVersion>8.0.30703</ProductVersion>
-            <SchemaVersion>2.0</SchemaVersion>
-            <ProjectGuid>{B6AB4EF3-8F60-41A1-AB0C-851A6DEB169E}</ProjectGuid>
-            <OutputType>Exe</OutputType>
-            <FSharpTargetsPath>$(MSBuildExtensionsPath32)\\Microsoft\\VisualStudio\\v$(VisualStudioVersion)\\FSharp\\Microsoft.FSharp.Targets</FSharpTargetsPath>
-          </PropertyGroup>
-          <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
-          <ItemGroup>
-            <Compile Include="Main.fs" />
-          </ItemGroup>
-          <ItemGroup>
-            <Reference Include="mscorlib" />
-            <Reference Include="System" />
-            <Reference Include="FSharp.Core" />
-          </ItemGroup>
-        </Project>
-      EOS
-      (testpath/"Main.fs").write <<~EOS
-        [<EntryPoint>]
-        let main _ = printfn "#{test_str}"; 0
-      EOS
-      system bin/"xbuild", "test.fsproj"
-    end
 
     if build.with? "msbuild"
       # Just rebuild the main project with msbuild
@@ -228,6 +191,43 @@ class Mono < Formula
 
         output = shell_output("#{bin}/mono bin/Debug/HomebrewMonoTest.exe")
         assert_match test_str, output.strip
+      end
+
+      if build.with? "fsharp"
+	# Test that fsharpi is working
+	ENV.prepend_path "PATH", bin
+	(testpath/"test.fsx").write <<~EOS
+	  printfn "#{test_str}"; 0
+	EOS
+	output = pipe_output("#{bin}/fsharpi test.fsx")
+	assert_match test_str, output
+
+	(testpath/"test.fsproj").write <<~EOS
+	  <?xml version="1.0" encoding="utf-8"?>
+	  <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	    <PropertyGroup>
+	      <ProductVersion>8.0.30703</ProductVersion>
+	      <SchemaVersion>2.0</SchemaVersion>
+	      <ProjectGuid>{B6AB4EF3-8F60-41A1-AB0C-851A6DEB169E}</ProjectGuid>
+	      <OutputType>Exe</OutputType>
+	      <FSharpTargetsPath>$(MSBuildExtensionsPath32)\\Microsoft\\VisualStudio\\v$(VisualStudioVersion)\\FSharp\\Microsoft.FSharp.Targets</FSharpTargetsPath>
+	    </PropertyGroup>
+	    <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+	    <ItemGroup>
+	      <Compile Include="Main.fs" />
+	    </ItemGroup>
+	    <ItemGroup>
+	      <Reference Include="mscorlib" />
+	      <Reference Include="System" />
+	      <Reference Include="FSharp.Core" />
+	    </ItemGroup>
+	  </Project>
+	EOS
+	(testpath/"Main.fs").write <<~EOS
+	  [<EntryPoint>]
+	  let main _ = printfn "#{test_str}"; 0
+	EOS
+	system bin/"msbuild", "test.fsproj"
       end
     end
   end

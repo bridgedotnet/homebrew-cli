@@ -1,7 +1,7 @@
 class Bridge < Formula
   desc "Bridge.NET CLI"
   homepage "https://bridge.net/"
-  url "https://github.com/bridgedotnet/CLI.git", :tag => "v16.6.1"
+  url "https://github.com/bridgedotnet/CLI.git", :tag => "v16.6.1-pre"
   # version "16.6.1"
 
   # Currently, the development branch is 'master'.

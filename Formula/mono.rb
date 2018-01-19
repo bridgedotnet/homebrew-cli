@@ -6,6 +6,11 @@ class Mono < Formula
   url "https://github.com/mono/mono.git",
       :tag => "mono-5.4.1.6"
 
+  bottle do
+    root_url "https://github.com/bridgedotnet/CLI/releases/download/v16.6.1-pre"
+    sha256 "5b4e47442df809f4f7fcd0d2de0705f6d954382d5ea8cb2060ecb52385d32576" => :high_sierra
+  end
+    
   # xbuild requires the .exe files inside the runtime directories to
   # be executable
   skip_clean "lib/mono"

@@ -28,7 +28,11 @@ class Bridge < Formula
 
   class << self
     def mono?
-      if which_mono = which("mono", ENV["HOMEBREW_PATH"])
+      # Favor brew formula if it is installed.
+      # This allows depends_on to kick in and set up paths as well.
+      if Formula["mono"].bin.exist?
+        false
+      elsif which_mono = fp("mono")
         version = Utils.popen_read which_mono, "--version", :err => :out
         return false unless $CHILD_STATUS.success?
         version = version[/Mono JIT compiler version (\d+.\d+.\d+).*/, 1]

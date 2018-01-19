@@ -1,5 +1,5 @@
-MIN_MONO_VER="5.4.1"
-MIN_MSBUILD_VER="15.4"
+MIN_MONO_VER="5.4.1".freeze
+MIN_MSBUILD_VER="15.4".freeze
 
 class Bridge < Formula
   desc "Bridge.NET CLI"
@@ -25,9 +25,9 @@ class Bridge < Formula
   # sha256 "010b8456d1fbec98cbbbebba07509124799d23f3823931f956bfd3fc0247cb8a"
 
   class << self
-    def has_mono?
+    def mono?
       if which_mono = which("mono", ENV["HOMEBREW_PATH"])
-        version = Utils.popen_read which_mono, "--version", err: :out
+        version = Utils.popen_read which_mono, "--version", err => :out
         return false unless $CHILD_STATUS.success?
         version = version[/Mono JIT compiler version (\d+.\d+.\d+).*/, 1]
         return false unless version
@@ -37,10 +37,10 @@ class Bridge < Formula
       end
     end
 
-    def has_msbuild?
-      return false unless has_mono?
+    def msbuild?
+      return false unless mono?
       if which_msbuild = which("msbuild", ENV["HOMEBREW_PATH"])
-        version = Utils.popen_read which_msbuild, "/version", err: :out
+        version = Utils.popen_read which_msbuild, "/version", err => :out
         return false unless $CHILD_STATUS.success?
         version = version[/Microsoft \(R\) Build Engine version (\d+.\d+.\d+).*/, 1]
         return false unless version
@@ -51,8 +51,8 @@ class Bridge < Formula
     end
   end
 
-  depends_on "bridgedotnet/cli/mono" => :run unless has_mono?
-  depends_on "bridgedotnet/cli/mono" => :build unless has_msbuild?
+  depends_on "bridgedotnet/cli/mono" => :run unless mono?
+  depends_on "bridgedotnet/cli/mono" => :build unless msbuild?
 
   def install
     system "xbuild", "/p:Configuration=Release", "Bridge.CLI.sln"
@@ -63,19 +63,19 @@ class Bridge < Formula
       libexec.install("tools")
 
       # Create a bridge wrapper to call it using mono
-      bridge_wrapper = File.new("bridge", "w")
-      bridge_wrapper.puts "#!/bin/bash
+      "bridge".write <<~EOS
+        #!/bin/bash
 
-scppath=\"$(dirname \"${BASH_SOURCE[0]}\")\"
+        scppath=\"$(dirname \"${BASH_SOURCE[0]}\")\"
 
-# In OSX we can only get relative path to the link.
-physpath=\"$(dirname \"$(readlink -n \"${BASH_SOURCE[0]}\")\")\"
-bridgepath=\"${scppath}/${physpath}/../libexec/bridge.exe\"
+        # In OSX we can only get relative path to the link.
+        physpath=\"$(dirname \"$(readlink -n \"${BASH_SOURCE[0]}\")\")\"
+        bridgepath=\"${scppath}/${physpath}/../libexec/bridge.exe\"
 
-mono \"${bridgepath}\" \"${@}\"
+        mono \"${bridgepath}\" \"${@}\"
 
-exit ${!}"
-      bridge_wrapper.close
+        exit ${!}"
+      EOS
 
       bin.install("bridge")
     end

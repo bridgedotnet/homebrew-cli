@@ -1,3 +1,6 @@
+MIN_MONO_VER="5.4.1"
+MIN_MSBUILD_VER="15.4"
+
 class Bridge < Formula
   desc "Bridge.NET CLI"
   homepage "https://bridge.net/"
@@ -21,7 +24,35 @@ class Bridge < Formula
   # url "https://github.com/bridgedotnet/CLI/tarball/v0.1-alpha"
   # sha256 "010b8456d1fbec98cbbbebba07509124799d23f3823931f956bfd3fc0247cb8a"
 
-  depends_on "mono" => :run
+  class << self
+    def has_mono?
+      if which_mono = which("mono", ENV["HOMEBREW_PATH"])
+        version = Utils.popen_read which_mono, "--version", err: :out
+        return false unless $CHILD_STATUS.success?
+        version = version[/Mono JIT compiler version (\d+.\d+.\d+).*/, 1]
+        return false unless version
+        Version.new(version) >= MIN_MONO_VER
+      else
+        false
+      end
+    end
+
+    def has_msbuild?
+      return false unless has_mono?
+      if which_msbuild = which("msbuild", ENV["HOMEBREW_PATH"])
+        version = Utils.popen_read which_msbuild, "/version", err: :out
+        return false unless $CHILD_STATUS.success?
+        version = version[/Microsoft \(R\) Build Engine version (\d+.\d+.\d+).*/, 1]
+        return false unless version
+        Version.new(version) >= MIN_MSBUILD_VER
+      else
+        false
+      end
+    end
+  end
+
+  depends_on "bridgedotnet/cli/mono" => :run unless has_mono?
+  depends_on "bridgedotnet/cli/mono" => :build unless has_msbuild?
 
   def install
     system "xbuild", "/p:Configuration=Release", "Bridge.CLI.sln"

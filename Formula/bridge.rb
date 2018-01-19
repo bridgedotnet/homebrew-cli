@@ -70,10 +70,7 @@ class Bridge < Formula
   end
 
   depends_on "bridgedotnet/cli/mono" => :run unless mono?
-  depends_on "bridgedotnet/cli/mono" => :build unless msbuild? or xbuild?
-
-  # Bind "false" so that it runs /bin/false if neither is found, somehow.
-  @@builder = msbuild? ? "msbuild" : ( xbuild? ? "xbuild" : "false" )
+  depends_on "bridgedotnet/cli/mono" => :build unless msbuild? || xbuild?
 
   def install
     # If we have paths.d, then load paths from it, as mono package sets up its
@@ -83,7 +80,17 @@ class Bridge < Formula
       ENV.append_path "PATH", child.readlines.collect(&:strip).join(":")
     end
 
-    system @@builder, "/p:Configuration=Release", "Bridge.CLI.sln"
+    # By default, builder path is to /bin/false so that it returns an error.
+    builder = "false"
+
+    # Favor msbuild over xbuild.
+    if which("msbuild")
+      builder = "msbuild"
+    elsif which("xbuild")
+      builder = "xbuild"
+    end
+
+    system builder, "/p:Configuration=Release", "Bridge.CLI.sln"
 
     Dir.chdir("Bridge/bin/Release") do
       libexec.install("bridge.exe")

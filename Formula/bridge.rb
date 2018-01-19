@@ -14,7 +14,8 @@ class Bridge < Formula
   bottle do
     root_url "https://github.com/bridgedotnet/CLI/releases/download/v16.6.1-pre"
     cellar :any_skip_relocation
-    sha256 "94471ca9c1837896368330341b4374bf82ab7015c855ee0ee958d047492f3549" => :high_sierra
+    sha256 "634e537a6b84d92f404bad952646dd7670dec5ba44f855da6c747a8142c4d5fa" => :high_sierra
+    rebuild 1
   end
 
   # devel do

@@ -12,9 +12,9 @@ class Bridge < Formula
   head "https://github.com/bridgedotnet/CLI.git", :branch => "master"
 
   bottle do
-    root_url "https://github.com/bridgedotnet/CLI/releases/download/bottles"
+    root_url "https://github.com/bridgedotnet/homebrew-cli/releases/download/bottle"
     cellar :any_skip_relocation
-    sha256 "1f2883fa63e735208ff09926aa78d61ff49f42e5453d6b6813c5a6e4e8605c1e" => :high_sierra
+    sha256 "ae3b34309ea12f60cb7c00f19b6b87225883da87296f4243974a9c754734dde1" => :high_sierra
   end
 
   # devel do

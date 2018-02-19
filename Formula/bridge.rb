@@ -14,7 +14,7 @@ class Bridge < Formula
   bottle do
     root_url "https://github.com/bridgedotnet/homebrew-cli/releases/download/bottle"
     cellar :any_skip_relocation
-    sha256 "ae3b34309ea12f60cb7c00f19b6b87225883da87296f4243974a9c754734dde1" => :high_sierra
+    sha256 "9006df66244f7b7ce4a146c305ba35ce16ca5c5b30ef040dddc8f936a159c7de" => :high_sierra
   end
 
   # devel do

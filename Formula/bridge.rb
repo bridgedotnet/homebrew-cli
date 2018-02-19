@@ -5,7 +5,7 @@ MIN_XBUILD_VER="14.0".freeze
 class Bridge < Formula
   desc "Bridge.NET CLI"
   homepage "https://bridge.net/"
-  url "https://github.com/bridgedotnet/CLI.git", :tag => "v16.7.1"
+  url "https://github.com/bridgedotnet/CLI.git", :tag => "v16.8.0"
   # version "16.6.1"
 
   # Currently, the development branch is 'master'.

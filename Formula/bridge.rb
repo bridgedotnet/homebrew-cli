@@ -5,7 +5,7 @@ MIN_XBUILD_VER="14.0".freeze
 class Bridge < Formula
   desc "Bridge.NET CLI"
   homepage "https://bridge.net/"
-  url "https://github.com/bridgedotnet/CLI.git", :tag => "v16.8.2"
+  url "https://github.com/bridgedotnet/CLI.git", :tag => "v17.0.0"
   # version "16.6.1"
 
   # Currently, the development branch is 'master'.
@@ -14,7 +14,7 @@ class Bridge < Formula
   bottle do
     root_url "https://github.com/bridgedotnet/homebrew-cli/releases/download/bottle"
     cellar :any_skip_relocation
-    sha256 "0e73bd86c5dfb8e9becd31f132178751aa779f5429a357b6d623f2781fc2fa6e" => :high_sierra
+    sha256 "c4ed8babbf52d95de215c67587deafb911767f1f3ed7ec91339f50499def0ad3" => :high_sierra
   end
 
   # devel do

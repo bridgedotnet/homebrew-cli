@@ -73,7 +73,7 @@ class Bridge < Formula
     end
   end
 
-  depends_on "bridgedotnet/cli/mono" => :run unless mono?
+  depends_on "bridgedotnet/cli/mono" unless mono?
   depends_on "bridgedotnet/cli/mono" => :build unless msbuild? || xbuild?
 
   def install

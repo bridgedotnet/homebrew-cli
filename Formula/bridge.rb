@@ -5,7 +5,7 @@ MIN_XBUILD_VER="14.0".freeze
 class Bridge < Formula
   desc "Bridge.NET CLI"
   homepage "https://bridge.net/"
-  url "https://github.com/bridgedotnet/CLI.git", :tag => "v17.1.1"
+  url "https://github.com/bridgedotnet/CLI.git", :tag => "v17.2.0"
 
   # Currently, the development branch is 'master'.
   head "https://github.com/bridgedotnet/CLI.git", :branch => "master"
@@ -13,8 +13,8 @@ class Bridge < Formula
   bottle do
     root_url "https://github.com/bridgedotnet/homebrew-cli/releases/download/bottle"
     cellar :any_skip_relocation
-    sha256 "76efeae16ef0de1d9eb4ae8cfb04df74e089077d1e4071eb97aeb4b5556e5ff4" => :high_sierra
-    sha256 "45ed18a8a16516a871f051702bfd1cb706f73c2e0823e812ca3aa370a2291375" => :sierra
+    sha256 "94e93e5b5c93fbdafb0150867c9b3a9c83aa33992f2ff51aa5c4d36e69644d40" => :high_sierra
+    sha256 "68eda98829c4648b9e70c0efb954d9d1b12c0d2c49c4b1023ffc62bc4b3d34ea" => :sierra
   end
 
   # Building from sources from the dev branch shouldn't work unless all other

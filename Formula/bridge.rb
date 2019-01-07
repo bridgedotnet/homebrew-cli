@@ -78,8 +78,8 @@ class Bridge < Formula
     end
   end
 
-  depends_on "bridgedotnet/cli/mono" unless mono?
-  depends_on "bridgedotnet/cli/mono" => :build unless msbuild? || xbuild?
+  depends_on "mono" unless mono?
+  depends_on "mono" => :build unless msbuild? || xbuild?
 
   def install
     # If we have paths.d, then load paths from it, as mono package sets up its

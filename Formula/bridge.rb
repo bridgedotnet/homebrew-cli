@@ -5,7 +5,7 @@ MIN_XBUILD_VER="14.0".freeze
 class Bridge < Formula
   desc "Bridge.NET CLI"
   homepage "https://bridge.net/"
-  url "https://github.com/bridgedotnet/CLI.git", :tag => "v17.7.0"
+  url "https://github.com/bridgedotnet/CLI.git", :tag => "v17.8.0"
 
   # Currently, the development branch is 'master'.
   head "https://github.com/bridgedotnet/CLI.git", :branch => "master"
@@ -13,9 +13,9 @@ class Bridge < Formula
   bottle do
     root_url "https://github.com/bridgedotnet/homebrew-cli/releases/download/bottle"
     cellar :any_skip_relocation
-    sha256 "efd8be27fcf461ab654328e415bdad9996aa7410d9c6bfc93bd2a1c43b75f5db" => :sierra
-    sha256 "a6908a113fae0148d149dc18dc085d8a8ee008156d712b804f33b815733a1fa1" => :high_sierra
-    sha256 "731ddf3cab3d6ffe35edd4726d1783341fa98f8483cd1fce321746cf3fcc9902" => :mojave
+    sha256 "9890329bd694e6b81af627b5e9cce385fde06538f5373743426024fcd9ee1861" => :sierra
+    sha256 "c186599f09b3682f9857fd5c1ea86f4a705a4ce2414fd21fa4bbd0d78542a4cf" => :high_sierra
+    sha256 "7c387634e470003c35488c1f062c0d9026fb788bf0ad485651b65e4290669b5b" => :mojave
   end
 
   # Building from sources from the dev branch shouldn't work unless all other
@@ -88,6 +88,7 @@ class Bridge < Formula
     pathsd_directory.children.each do |child|
       ENV.append_path "PATH", child.readlines.collect(&:strip).join(":")
     end
+    ENV.append_path "PATH", ":/usr/local/bin"
 
     # By default, builder path is to /bin/false so that it returns an error.
     builder = "false"

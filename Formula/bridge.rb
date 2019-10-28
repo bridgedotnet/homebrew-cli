@@ -1,20 +1,20 @@
-MIN_MONO_VER="5.4.1".freeze
-MIN_MSBUILD_VER="15.4".freeze
+MIN_MONO_VER="5.18.0".freeze
+MIN_MSBUILD_VER="16.0".freeze
 MIN_XBUILD_VER="14.0".freeze
 
 class Bridge < Formula
   desc "Bridge.NET CLI"
   homepage "https://bridge.net/"
-  url "https://github.com/bridgedotnet/CLI.git", :tag => "v17.9.0"
+  url "https://github.com/bridgedotnet/CLI.git", :tag => "v17.10.0"
 
   # Currently, the development branch is 'master'.
   head "https://github.com/bridgedotnet/CLI.git", :branch => "master"
 
   bottle do
     root_url "https://github.com/bridgedotnet/homebrew-cli/releases/download/bottle"
-    sha256 "d0d0b799454dde7019ab4e8c6effcfa86e562d0dd2d3f6afc220c9fb1230755f" => :sierra
-    sha256 "9dffc6644908e9528bb8d78a62abf9e6b41fbd1b9f7d056197dde92734546bc4" => :high_sierra
-    sha256 "ec6c7a0b29f86c3d2a4a672d7043b950e05fe285dffd6eae531a2b6304dc5bda" => :mojave
+    sha256 "be13f033280bca2edae828d35f200c7d73522fedfa6bc246aab0a567d64ff5a7" => :sierra
+    sha256 "3bc240b2233cb64b4d56b75a20b392dfadbd8db6bd0c9677e48b249ad5577092" => :high_sierra
+    sha256 "956db6b7a521a1d8316d8f5e854af3950e0c47fc2e3a5f1723fb66b723a0437f" => :mojave
     cellar :any_skip_relocation
   end
 

@@ -5,17 +5,16 @@ MIN_XBUILD_VER="14.0".freeze
 class Bridge < Formula
   desc "Bridge.NET CLI"
   homepage "https://bridge.net/"
-  url "https://github.com/bridgedotnet/CLI.git", :tag => "v17.10.0"
+  url "https://github.com/bridgedotnet/CLI.git", :tag => "v17.10.1"
 
   # Currently, the development branch is 'master'.
   head "https://github.com/bridgedotnet/CLI.git", :branch => "master"
 
   bottle do
     root_url "https://github.com/bridgedotnet/homebrew-cli/releases/download/bottle"
-    sha256 "be13f033280bca2edae828d35f200c7d73522fedfa6bc246aab0a567d64ff5a7" => :sierra
-    sha256 "3bc240b2233cb64b4d56b75a20b392dfadbd8db6bd0c9677e48b249ad5577092" => :high_sierra
-    sha256 "956db6b7a521a1d8316d8f5e854af3950e0c47fc2e3a5f1723fb66b723a0437f" => :mojave
-    sha256 "0dab1595fbf743ddafa4197ee68e378b84fcbb30fc48d02a5185170327d52c44" => :catalina
+    sha256 "22998c84ab7d3aec67f0fd0684c1d9aabe8da5bf06c2c06a9ec17f9c5b6eecee" => :sierra\
+    sha256 "378d65394b9040ad61f0b645002cee7136bd8ccdbd1df6c4cc27a8689adfeebf" => :high_sierra
+    sha256 "1b424764e880bf38b8b0a5e415d5feb7c7b73d577bb95bda36a4ad304fa40d51" => :catalina
     cellar :any_skip_relocation
   end
 
